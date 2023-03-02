@@ -23,12 +23,12 @@ class _MyWidgetState extends State<MyWidget>{
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController pesoController = TextEditingController();
-  TextEditingController alturaController = TextEditingController();
+  TextEditingController etanolController = TextEditingController();
+  TextEditingController gasolinaController = TextEditingController();
 
   void _resetFields(){
-    pesoController.text = '';
-    pesoController.text = '';
+    gasolinaController.text = '';
+    etanolController.text = '';
     setState(() {
       _info ="Informe seus dados.";
       _formKey = GlobalKey<FormState>();
@@ -37,25 +37,29 @@ class _MyWidgetState extends State<MyWidget>{
 
   void _calcular(){
     setState(() {
-      double peso = double.parse(pesoController.text);
-      double altura = double.parse(alturaController.text);
-      double imc = (peso / (altura * altura));
+      double gasolina = double.parse(gasolinaController.text);
+      double etanol = double.parse(etanolController.text);
+      
 
-      print(imc);
-
-      if (imc < 18.6) {
-        _info = 'Abaixo do Peso (${imc.toStringAsPrecision(3)})';
-      } else if (imc >= 18.6 && imc < 24.9){
-        _info = 'Peso Ideal (${imc.toStringAsPrecision(3)})';
-      } else if (imc >= 24.9 && imc < 29.9){
-        _info = 'Levemente Acima do Peso (${imc.toStringAsPrecision(3)})';
-      } else if (imc >= 29.9 && imc < 34.9){
-        _info = 'Obesidade Grau I (${imc.toStringAsPrecision(3)})';
-      } else if (imc >= 34.9 && imc < 39.9){
-        _info = 'Obesidade Grau II (${imc.toStringAsPrecision(3)})';
-      } else if (imc >= 40){
-        _info = 'Obesidade Grau III (${imc.toStringAsPrecision(3)})';
+      if (etanol <= gasolina * 0.7) {
+        _info = 'É vantajoso colocar Etanol! ';
+      } else{
+        _info = 'É vantajoso colocar Gasolina! ';
       }
+
+      // if (imc < 18.6) {
+      //   _info = 'Abaixo do Peso (${imc.toStringAsPrecision(3)})';
+      // } else if (imc >= 18.6 && imc < 24.9){
+      //   _info = 'Peso Ideal (${imc.toStringAsPrecision(3)})';
+      // } else if (imc >= 24.9 && imc < 29.9){
+      //   _info = 'Levemente Acima do Peso (${imc.toStringAsPrecision(3)})';
+      // } else if (imc >= 29.9 && imc < 34.9){
+      //   _info = 'Obesidade Grau I (${imc.toStringAsPrecision(3)})';
+      // } else if (imc >= 34.9 && imc < 39.9){
+      //   _info = 'Obesidade Grau II (${imc.toStringAsPrecision(3)})';
+      // } else if (imc >= 40){
+      //   _info = 'Obesidade Grau III (${imc.toStringAsPrecision(3)})';
+      // }
     });
   }
 
@@ -64,9 +68,9 @@ class _MyWidgetState extends State<MyWidget>{
     return MaterialApp(
       home: Scaffold(
       appBar: AppBar(
-        title: const Text("Calcula IMC"),
+        title: const Text("Etenol ou Gasolina?"),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromARGB(255, 175, 76, 76),
         actions: <Widget>[
           IconButton(onPressed: _resetFields, icon: const Icon(Icons.refresh))
         ],
@@ -79,16 +83,16 @@ class _MyWidgetState extends State<MyWidget>{
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  const Icon(Icons.person_outline,
-                      size: 120.0, color: Colors.green),
+                  const Icon(Icons.whatshot_rounded,
+                      size: 120.0, color: Color.fromARGB(255, 175, 76, 76)),
                   TextFormField(
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
-                          labelText: "Peso (Kg)",
-                          labelStyle: TextStyle(color: Colors.green)),
+                          labelText: "Digite o valor do Etanol",
+                          labelStyle: TextStyle(color: Color.fromARGB(255, 175, 76, 76))),
                           textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.green, fontSize: 25.0),
-                          controller: pesoController,
+                          style: const TextStyle(color: Color.fromARGB(255, 175, 76, 76), fontSize: 20.0),
+                          controller: etanolController,
                           validator: (value) {
                             if(value!.isEmpty){
                               return "Insira seu Peso!";
@@ -99,11 +103,11 @@ class _MyWidgetState extends State<MyWidget>{
                   TextFormField(
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
-                          labelText: "Altura (M)",
-                          labelStyle: TextStyle(color: Colors.green)),
+                          labelText: "Digite o valor da gasolina",
+                          labelStyle: TextStyle(color: Color.fromARGB(255, 175, 76, 76))),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.green, fontSize: 25.0),
-                    controller: alturaController,
+                    style: const TextStyle(color: Color.fromARGB(255, 175, 76, 76), fontSize: 20.0),
+                    controller: gasolinaController,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Insira sua Altura!";
@@ -121,14 +125,14 @@ class _MyWidgetState extends State<MyWidget>{
                       },
                       child: const Text(
                         'Calcular',
-                        style: TextStyle(color: Colors.green, fontSize: 25.0),
+                        style: TextStyle(color: Color.fromARGB(255, 175, 76, 76), fontSize: 25.0),
                       ),
                     ),
                   ),
                   Text(
                     _info,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.green, fontSize: 25.0),
+                    style: const TextStyle(color: Color.fromARGB(255, 175, 76, 76), fontSize: 25.0),
                   )
                 ],
               )))
